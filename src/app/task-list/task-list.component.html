@@ -1,7 +1,7 @@
 <input #newTask type="text" placeholder="New task" (keyup.enter)="addTask(newTask.value); newTask.value = ''">
 
 <ul *ngIf="tasks.length > 0">
-  <li *ngFor="let task of tasks">{{ task.name }}</li>
+  <app-task *ngFor="let task of tasks" [task]="task"></app-task>
 </ul>
 
 <p *ngIf="tasks.length === 0">No tasks!</p>

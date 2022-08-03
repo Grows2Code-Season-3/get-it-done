@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Task } from './task/task.component';
 
 @Component({
   selector: 'app-task-list',
@@ -8,10 +9,15 @@ import { Component, OnInit } from '@angular/core';
 export class TaskListComponent implements OnInit {
 
   tasks: Task[] = [];
+  @Output() taskTotalUpdateEvent = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() { 
+    this.tasks.push(new Task('walk dog'));
+    this.tasks.push(new Task('mow lawn'));
+  }
 
   ngOnInit(): void {
+    this.taskTotalUpdateEvent.emit(this.tasks.length);
   }
 
   addTask(task: string) {
@@ -20,17 +26,7 @@ export class TaskListComponent implements OnInit {
     }
 
     this.tasks.push(new Task(task));
-  }
-
-}
-
-class Task {
-
-  name: string;
-  isComplete: boolean = false;
-
-  constructor(name: string) {
-    this.name = name;
+    this.taskTotalUpdateEvent.emit(this.tasks.length);
   }
 
 }
